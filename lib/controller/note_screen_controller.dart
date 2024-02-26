@@ -29,7 +29,14 @@ class NoteScreenController {
 
   // function to edit data
 
-  void editData() {}
+  void editData(int index) {
+    notesList[index] = {
+      "title": titleController.text,
+      "des": desController.text,
+      "date": dateController.text,
+      "color": selectColor
+    };
+  }
 
   //clear controllers
 

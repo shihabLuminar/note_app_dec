@@ -8,7 +8,8 @@ class CustomNotesWidget extends StatefulWidget {
       required this.des,
       required this.date,
       required this.noteColor,
-      this.onDeletePressed});
+      this.onDeletePressed,
+      this.onEditPresssed});
 
   final String title;
   final String des;
@@ -16,6 +17,7 @@ class CustomNotesWidget extends StatefulWidget {
   final Color noteColor;
 
   final void Function()? onDeletePressed;
+  final void Function()? onEditPresssed;
 
   @override
   State<CustomNotesWidget> createState() => _CustomNotesWidgetState();
@@ -45,9 +47,7 @@ class _CustomNotesWidgetState extends State<CustomNotesWidget> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {
-                      // implement edit functinoality here
-                    },
+                    onPressed: widget.onEditPresssed,
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),

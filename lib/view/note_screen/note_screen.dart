@@ -23,6 +23,8 @@ class _NoteScreenState extends State<NoteScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorConstants.mainLightGrey,
         onPressed: () {
+          NoteScreenController.clearControllers();
+
           showModalBottomSheet(
               isScrollControlled: true,
               context: context,
@@ -68,6 +70,32 @@ class _NoteScreenState extends State<NoteScreen> {
 
                   noteScreenController.deleteData(index);
                   setState(() {});
+                },
+                onEditPresssed: () {
+                  //ASSIGNING VALUES TO CONTROLEERS WHILE EDITING
+                  NoteScreenController.titleController.text =
+                      noteScreenController.notesList[index]["title"];
+                  NoteScreenController.desController.text =
+                      noteScreenController.notesList[index]["des"];
+                  NoteScreenController.dateController.text =
+                      noteScreenController.notesList[index]["date"];
+
+// bottom sheet to update a data
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => CustomBottomSheet(
+                            isEdit: true,
+                            onSavePressed: () {
+                              // function to edit a note
+                              noteScreenController.editData(index);
+                              setState(() {});
+                              NoteScreenController
+                                  .clearControllers(); // CLEAR CONTROLLERS
+
+                              Navigator.pop(context);
+                            },
+                          ));
                 },
               ),
               separatorBuilder: (context, index) => SizedBox(height: 20),
