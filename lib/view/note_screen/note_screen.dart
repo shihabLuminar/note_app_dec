@@ -48,23 +48,30 @@ class _NoteScreenState extends State<NoteScreen> {
             color: ColorConstants.mainWhite,
             fontSize: 28),
       ),
-      body: ListView.separated(
-        itemCount: noteScreenController.notesList.length,
-        padding: EdgeInsets.all(15),
-        itemBuilder: (context, index) => CustomNotesWidget(
-          title: noteScreenController.notesList[index]["title"],
-          date: noteScreenController.notesList[index]["date"],
-          des: noteScreenController.notesList[index]["des"],
-          noteColor: noteScreenController.notesList[index]["color"],
-          onDeletePressed: () {
-            // to delete a data from the list
+      body: noteScreenController.notesList.isEmpty
+          ? Center(
+              child: Text(
+                "No data found",
+                style: TextStyle(color: ColorConstants.mainWhite),
+              ),
+            )
+          : ListView.separated(
+              itemCount: noteScreenController.notesList.length,
+              padding: EdgeInsets.all(15),
+              itemBuilder: (context, index) => CustomNotesWidget(
+                title: noteScreenController.notesList[index]["title"],
+                date: noteScreenController.notesList[index]["date"],
+                des: noteScreenController.notesList[index]["des"],
+                noteColor: noteScreenController.notesList[index]["color"],
+                onDeletePressed: () {
+                  // to delete a data from the list
 
-            noteScreenController.deleteData(index);
-            setState(() {});
-          },
-        ),
-        separatorBuilder: (context, index) => SizedBox(height: 20),
-      ),
+                  noteScreenController.deleteData(index);
+                  setState(() {});
+                },
+              ),
+              separatorBuilder: (context, index) => SizedBox(height: 20),
+            ),
     );
   }
 }
