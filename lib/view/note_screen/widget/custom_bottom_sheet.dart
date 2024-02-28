@@ -68,6 +68,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   height: 10,
                 ),
                 TextFormField(
+                  maxLines: 5,
                   controller: NoteScreenController.desController,
                   decoration: InputDecoration(
                       label: Text("Description"),
@@ -93,26 +94,23 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       border: OutlineInputBorder(),
                       fillColor: ColorConstants.mainLightGrey,
                       filled: true,
-                      suffixIcon:InkWell(
-                        
-                        onTap: () async{
-                      final DateTime? pickedDate =  await  showDatePicker(context: context, 
-                          firstDate:DateTime.now() ,
-                           lastDate: DateTime(2025));
+                      suffixIcon: InkWell(
+                          onTap: () async {
+                            final DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2025));
 
-
-                           if(pickedDate !=null){
+                            if (pickedDate != null) {
 // to format date
-                            String formatedDate = DateFormat("dd/MM/yyyy").format(pickedDate);
+                              String formatedDate =
+                                  DateFormat("dd/MM/yyyy").format(pickedDate);
 // to assign the formated date to controller
-                            NoteScreenController.dateController.text = formatedDate;
-
-                           }
-                        },
-
-
-           
-                        child: Icon(Icons.calendar_month))),
+                              NoteScreenController.dateController.text =
+                                  formatedDate;
+                            }
+                          },
+                          child: Icon(Icons.calendar_month))),
                   validator: (value) {
                     if (value != null && value.isNotEmpty) {
                       return null;
@@ -120,8 +118,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       return "select a valid date";
                     }
                   },
-
-
                 ),
                 SizedBox(
                   height: 10,

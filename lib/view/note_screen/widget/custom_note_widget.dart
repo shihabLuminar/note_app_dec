@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo_dec/utils/constants/color_constants.dart';
 
 class CustomNotesWidget extends StatefulWidget {
@@ -77,7 +78,9 @@ class _CustomNotesWidgetState extends State<CustomNotesWidget> {
               ),
               IconButton(
                 icon: Icon(Icons.share),
-                onPressed: () {},
+                onPressed: () {
+                  Share.share("${widget.title}\n${widget.des} ");
+                },
               ),
             ],
           ),
