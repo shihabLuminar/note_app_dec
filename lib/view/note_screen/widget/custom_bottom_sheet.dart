@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_dec/controller/note_screen_controller.dart';
 import 'package:todo_dec/utils/constants/color_constants.dart';
 
@@ -85,12 +86,33 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   height: 10,
                 ),
                 TextFormField(
+                  readOnly: true,
                   controller: NoteScreenController.dateController,
                   decoration: InputDecoration(
                       label: Text("Date"),
                       border: OutlineInputBorder(),
                       fillColor: ColorConstants.mainLightGrey,
-                      filled: true),
+                      filled: true,
+                      suffixIcon:InkWell(
+                        
+                        onTap: () async{
+                      final DateTime? pickedDate =  await  showDatePicker(context: context, 
+                          firstDate:DateTime.now() ,
+                           lastDate: DateTime(2025));
+
+
+                           if(pickedDate !=null){
+// to format date
+                            String formatedDate = DateFormat("dd/MM/yyyy").format(pickedDate);
+// to assign the formated date to controller
+                            NoteScreenController.dateController.text = formatedDate;
+
+                           }
+                        },
+
+
+           
+                        child: Icon(Icons.calendar_month))),
                   validator: (value) {
                     if (value != null && value.isNotEmpty) {
                       return null;
@@ -98,6 +120,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       return "select a valid date";
                     }
                   },
+
+
                 ),
                 SizedBox(
                   height: 10,
