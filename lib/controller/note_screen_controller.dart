@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class NoteScreenController {
   static TextEditingController titleController = TextEditingController();
@@ -8,23 +9,40 @@ class NoteScreenController {
   static Color selectColor = Colors.white;
   List notesList = [];
 
+  List noteKeys = [];
+  // // HIVE step 4
+  var myBox = Hive.box("noteBox");
+
   //function to add data
 
   void addData() {
-    notesList.add(
+    myBox.add(
       {
         "title": titleController.text,
         "des": desController.text,
         "date": dateController.text,
-        "color": selectColor
+        // "color": selectColor
       },
     );
+    noteKeys = myBox.keys.toList();
+    print(noteKeys);
+    print(myBox.values.toList());
+
+    // notesList.add(
+    //   {
+    //     "title": titleController.text,
+    //     "des": desController.text,
+    //     "date": dateController.text,
+    //     "color": selectColor
+    //   },
+    // );
   }
 
   // function to delete data
 
-  void deleteData(int index) {
-    notesList.removeAt(index);
+  void deleteData(var key) {
+    myBox.delete(key);
+    noteKeys = myBox.keys.toList();
   }
 
   // function to edit data
@@ -50,5 +68,9 @@ class NoteScreenController {
 
   void onColorSelection(Color newColor) {
     selectColor = newColor;
+  }
+
+  init() {
+    noteKeys = myBox.keys.toList();
   }
 }
