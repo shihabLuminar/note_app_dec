@@ -18,15 +18,6 @@ class CustomBottomSheet extends StatefulWidget {
 }
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
-  List colorsList = [
-    ColorConstants.redNote,
-    ColorConstants.blueNote,
-    ColorConstants.greenNote,
-    ColorConstants.yellowNote,
-  ];
-
-  int selectedColorIndex = 0;
-
   // global key
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -132,18 +123,16 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       onTap: () {
                         var obj = NoteScreenController();
 
-                        selectedColorIndex = index;
-
-                        obj.onColorSelection(colorsList[selectedColorIndex]);
+                        obj.onColorSelection(index);
                         bottomSetState(() {});
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          border: selectedColorIndex == index
+                          border: NoteScreenController.selectColorIndex == index
                               ? Border.all(
                                   width: 2, color: ColorConstants.mainRed)
                               : null,
-                          color: colorsList[index],
+                          color: NoteScreenController.colorsList[index],
                         ),
                         width: 60,
                       ),

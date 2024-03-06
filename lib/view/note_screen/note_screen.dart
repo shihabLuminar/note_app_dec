@@ -76,7 +76,9 @@ class _NoteScreenState extends State<NoteScreen> {
                   title: element["title"],
                   date: element["date"],
                   des: element["des"],
-                  noteColor: Colors.white, //element["color"],
+                  noteColor: element["color"] != null
+                      ? NoteScreenController.colorsList[element["color"]]
+                      : Colors.white,
                   onDeletePressed: () {
                     // to delete a data from the list
 
@@ -87,12 +89,11 @@ class _NoteScreenState extends State<NoteScreen> {
                   onEditPresssed: () {
                     //ASSIGNING VALUES TO CONTROLEERS WHILE EDITING
                     NoteScreenController.titleController.text =
-                        noteScreenController.notesList[index]["title"];
-                    NoteScreenController.desController.text =
-                        noteScreenController.notesList[index]["des"];
-                    NoteScreenController.dateController.text =
-                        noteScreenController.notesList[index]["date"];
+                        element["title"];
+                    NoteScreenController.desController.text = element["des"];
+                    NoteScreenController.dateController.text = element["date"];
 
+                    noteScreenController.onColorSelection(element["color"]);
 // bottom sheet to update a data
                     showModalBottomSheet(
                         isScrollControlled: true,
@@ -101,7 +102,9 @@ class _NoteScreenState extends State<NoteScreen> {
                               isEdit: true,
                               onSavePressed: () {
                                 // function to edit a note
-                                noteScreenController.editData(index);
+
+                                noteScreenController.editData(
+                                    noteScreenController.noteKeys[index]);
                                 setState(() {});
                                 NoteScreenController
                                     .clearControllers(); // CLEAR CONTROLLERS

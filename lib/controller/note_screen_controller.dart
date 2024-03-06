@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_dec/utils/constants/color_constants.dart';
 
 class NoteScreenController {
   static TextEditingController titleController = TextEditingController();
   static TextEditingController desController = TextEditingController();
   static TextEditingController dateController = TextEditingController();
-
-  static Color selectColor = Colors.white;
+  static List colorsList = [
+    ColorConstants.redNote,
+    ColorConstants.blueNote,
+    ColorConstants.greenNote,
+    ColorConstants.yellowNote,
+  ];
+  static int selectColorIndex = 0;
   List notesList = [];
 
   List noteKeys = [];
@@ -21,21 +27,12 @@ class NoteScreenController {
         "title": titleController.text,
         "des": desController.text,
         "date": dateController.text,
-        // "color": selectColor
+        "color": selectColorIndex
       },
     );
     noteKeys = myBox.keys.toList();
     print(noteKeys);
     print(myBox.values.toList());
-
-    // notesList.add(
-    //   {
-    //     "title": titleController.text,
-    //     "des": desController.text,
-    //     "date": dateController.text,
-    //     "color": selectColor
-    //   },
-    // );
   }
 
   // function to delete data
@@ -47,13 +44,13 @@ class NoteScreenController {
 
   // function to edit data
 
-  void editData(int index) {
-    notesList[index] = {
+  void editData(var key) {
+    myBox.put(key, {
       "title": titleController.text,
       "des": desController.text,
       "date": dateController.text,
-      "color": selectColor
-    };
+      "color": selectColorIndex
+    });
   }
 
   //clear controllers
@@ -66,8 +63,8 @@ class NoteScreenController {
 
   // on color seleciton
 
-  void onColorSelection(Color newColor) {
-    selectColor = newColor;
+  void onColorSelection(int newColorIndex) {
+    selectColorIndex = newColorIndex;
   }
 
   init() {
